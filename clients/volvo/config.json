@@ -18,5 +18,5 @@
     "semanticModel": "../../../Testing DDM/DDM dashboard initial.SemanticModel",
     "goldenFixture": "../../../Testing DDM/Reference/DDM Summary dashboard.Report"
   },
-  "engine": "../../engine/ddm"
+  "engine": "../../../Testing DDM/SKILL-DDM"
 }

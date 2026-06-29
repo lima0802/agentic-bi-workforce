@@ -32,7 +32,7 @@ explicit approval line. Do not build until the user approves.
 ## Step 3 — Dispatch
 | client | task | engine |
 |---|---|---|
-| volvo | ddm-start | `../engine/ddm` (SKILL.md + AGENTS.md) |
+| volvo | ddm-start | `../../Testing DDM/SKILL-DDM` (SKILL.md + AGENTS.md) |
 
 The engine delegates only through the WPP wrappers — `wpp-plan` → `wpp-model` →
 `wpp-report` (in `../skills/`). WPP wrappers call the **pinned** Fabric foundation skills;
