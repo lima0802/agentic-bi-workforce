@@ -1,0 +1,26 @@
+{
+  "font": {
+    "family": "Volvo Centum",
+    "regular": "VolvoCentum_Rg.ttf",
+    "bold": "VolvoCentum_Bd.ttf",
+    "semibold": "VolvoCentum_SBd.ttf",
+    "light": "VolvoCentum_Lt.ttf",
+    "source": "../../../Testing DDM/Reference/Fonts",
+    "note": "Replaces Segoe UI/Arial. fontFamily in visuals = 'Volvo Centum'."
+  },
+  "colors": {
+    "navy": "#001C30",
+    "steel": "#003760",
+    "barSecondary": "#66869E",
+    "canvas": "#F2F4F6",
+    "gridline": "#E0E5EA"
+  },
+  "page": { "width": 1280, "height": 1300, "displayOption": "ActualSize" },
+  "frame": {
+    "headerRect": { "x": 0, "y": 0, "w": 1280, "h": 172, "fill": "#001C30" },
+    "sectionDividers": "line shapes h=16 between KPI rows at y=332/492",
+    "kpiGrid": "3x3, ~144x144 cards, cols x=16/432/856, rows y=188/348/508",
+    "sectionHeaderMinH": 36
+  },
+  "kpi": { "valueColor": "#001C30", "labelColor": "#003760", "bg": "#FFFFFF" }
+}

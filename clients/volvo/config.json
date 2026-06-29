@@ -1,0 +1,22 @@
+{
+  "client": "volvo",
+  "stream": "ddm",
+  "task": "ddm-start",
+  "tokens": {
+    "FACT_TABLE": "V_FACT_SEND_PERFORMANCE_TRACKING",
+    "FACT_DATE_COLUMN": "SEND_DATE",
+    "FACT_COUNTRY_COLUMN": "BUSINESS_UNIT",
+    "FACT_COMPKEY_COLUMN": "COMP_KEY",
+    "COUNTRY_DIM": "V_DIM_COUNTRY",
+    "METADATA_DIM": "V_DIM_SFMC_METADATA_JOB",
+    "DASHBOARD_TITLE": "DDM Performance Dashboard",
+    "ENABLE_BM": "true"
+  },
+  "paths": {
+    "pbip": "../../../Testing DDM/DDM dashboard initial_1.pbip",
+    "report": "../../../Testing DDM/DDM dashboard initial_1.Report",
+    "semanticModel": "../../../Testing DDM/DDM dashboard initial_1.SemanticModel",
+    "goldenFixture": "../../../Testing DDM/Reference/DDM Summary dashboard.Report"
+  },
+  "engine": "../../../Testing DDM/SKILL-DDM"
+}
