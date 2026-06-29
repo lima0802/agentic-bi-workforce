@@ -1,0 +1,26 @@
+{
+  "clientSlug": "volvo",
+  "clientName": "Volvo Cars",
+  "brand": "Volvo Centum",
+  "pbipRepoPath": "${VOLVO_PBIP_PATH}",
+  "reportFolder": "Volvo DDM Overview.Report",
+  "modelFolder": "Volvo DDM.Dataset",
+  "locale": "en-GB",
+  "currency": "SEK",
+  "fiscalYearStartMonth": 1,
+  "dataRefreshCronUTC": "0 4 * * *",
+  "evals": {
+    "gatesScript": "evals/gates.ps1",
+    "judgeScript": "evals/judge.py",
+    "briefs": {
+      "modelIntegrity": "evals/briefs/model-integrity.md",
+      "brandFrame": "evals/briefs/brand-frame.md",
+      "overviewPage": "evals/briefs/overview-page.md"
+    }
+  },
+  "engine": {
+    "planSkill": "skills/wpp-plan/skill.md",
+    "modelSkill": "skills/wpp-model/skill.md",
+    "reportSkill": "skills/wpp-report/skill.md"
+  }
+}
