@@ -86,7 +86,7 @@ function Invoke-ModelChecks {
     $uuidPattern = [regex]'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
     $badLineage  = @()
     foreach ($f in $tmdlFiles) {
-        $content = Get-Content $_.FullName -Raw
+        $content = Get-Content $f.FullName -Raw
         $matches = [regex]::Matches($content, 'lineageTag:\s*([^\s]+)')
         foreach ($m in $matches) {
             $tag = $m.Groups[1].Value.Trim('"').Trim("'")
