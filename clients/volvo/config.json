@@ -13,10 +13,10 @@
     "ENABLE_BM": "true"
   },
   "paths": {
-    "pbip": "../../../Testing DDM/DDM dashboard initial_1.pbip",
-    "report": "../../../Testing DDM/DDM dashboard initial_1.Report",
-    "semanticModel": "../../../Testing DDM/DDM dashboard initial_1.SemanticModel",
+    "pbip": "../../../Testing DDM/DDM dashboard initial.pbip",
+    "report": "../../../Testing DDM/DDM dashboard initial.Report",
+    "semanticModel": "../../../Testing DDM/DDM dashboard initial.SemanticModel",
     "goldenFixture": "../../../Testing DDM/Reference/DDM Summary dashboard.Report"
   },
-  "engine": "../../../Testing DDM/SKILL-DDM"
+  "engine": "../../engine/ddm"
 }

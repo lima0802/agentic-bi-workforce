@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "6f30b9bd469c6d43d25d",
+  "position": {
+    "x": 0,
+    "y": 120,
+    "z": 2,
+    "height": 25,
+    "width": 1300,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "shape",
+    "objects": {
+      "shape": [
+        { "properties": { "tileShape": { "expr": { "Literal": { "Value": "'line'" } } } } }
+      ],
+      "rotation": [
+        { "properties": { "shapeAngle": { "expr": { "Literal": { "Value": "0L" } } } } }
+      ],
+      "fill": [
+        {
+          "properties": {
+            "fillColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#001C30'" } } } } }
+          },
+          "selector": { "id": "default" }
+        }
+      ],
+      "outline": [
+        {
+          "properties": {
+            "lineColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#001C30'" } } } } }
+          },
+          "selector": { "id": "default" }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        { "properties": { "text": { "expr": { "Literal": { "Value": "'Bottom_line'" } } } } }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "howCreated": "InsertVisualButton"
+}

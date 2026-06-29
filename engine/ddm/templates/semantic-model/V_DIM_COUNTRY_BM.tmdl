@@ -1,0 +1,83 @@
+table V_DIM_COUNTRY_BM
+	lineageTag: <UUID-V_DIM_COUNTRY_BM>
+
+	column 'Country code'
+		dataType: string
+		lineageTag: <UUID-col-CountryCode>
+		summarizeBy: none
+		sourceColumn: Country code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country SFMC name'
+		dataType: string
+		lineageTag: <UUID-col-CountrySFMC>
+		summarizeBy: none
+		sourceColumn: Country SFMC name
+
+		annotation SummarizationSetBy = Automatic
+
+	column REGION_NAME_GROUP
+		dataType: string
+		lineageTag: <UUID-col-RegionGroup>
+		summarizeBy: none
+		sourceColumn: REGION_NAME_GROUP
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Market name'
+		dataType: string
+		lineageTag: <UUID-col-MarketName>
+		summarizeBy: none
+		sourceColumn: Market name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Name_Transformed =
+
+			SWITCH(
+			TRUE(), // common pattern for multiple conditions in SWITCH
+			V_DIM_COUNTRY_BM[REGION_NAME_GROUP] = "LATAM", "GILA",
+			V_DIM_COUNTRY_BM[REGION_NAME_GROUP] // default: return original value
+			)
+		lineageTag: <UUID-col-RegionTransformed>
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub-Region name'
+		dataType: string
+		lineageTag: <UUID-col-SubRegion>
+		summarizeBy: none
+		sourceColumn: Sub-Region name
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_COUNTRY_CODE
+		dataType: string
+		lineageTag: <UUID-col-SourceCountryCode>
+		summarizeBy: none
+		sourceColumn: SOURCE_COUNTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition V_DIM_COUNTRY_BM-<UUID-partition> = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("vcg_dm.west-europe.azure.snowflakecomputing.com"
+				    ,param_warehouse_analyst
+				    ,[Role=param_role_analyst]
+				    ),
+				    DEV_EDW_DB_Database = Source{[Name=param_database_prod,Kind="Database"]}[Data],
+				    MARCOM_DM_Schema = DEV_EDW_DB_Database{[Name=param_schema_dm,Kind="Schema"]}[Data],
+				    V_DIM_DDM_MARKETS_View = MARCOM_DM_Schema{[Name="V_DIM_COUNTRY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(V_DIM_DDM_MARKETS_View,{{"COUNTRY_NAME", "Market name"}, {"SUB_REGION", "Sub-Region name"}, {"COUNTRY_CODE", "Country code"}, {"VC_COUNTRY_CODE", "Country SFMC name"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"MARKET_CD", "SALES_AREA"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","LATAM","GILA",Replacer.ReplaceText,{"REGION_NAME_GROUP"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

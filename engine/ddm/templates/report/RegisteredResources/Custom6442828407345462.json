@@ -1,0 +1,27 @@
+{
+  "name": "Custom",
+  "textClasses": {
+    "label": {
+      "fontFace": "Volvo Centum"
+    },
+    "callout": {
+      "fontFace": "Volvo Centum"
+    },
+    "title": {
+      "fontFace": "Volvo Centum"
+    },
+    "header": {
+      "fontFace": "Volvo Centum"
+    }
+  },
+  "dataColors": [
+    "#00375F",
+    "#DACABB",
+    "#66869E",
+    "#F2E8DE",
+    "#E044A7",
+    "#744EC2",
+    "#D9B300",
+    "#D64550"
+  ]
+}

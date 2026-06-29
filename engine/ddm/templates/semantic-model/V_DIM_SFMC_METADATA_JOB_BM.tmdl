@@ -1,0 +1,111 @@
+table V_DIM_SFMC_METADATA_JOB_BM
+	lineageTag: <UUID-V_DIM_SFMC_METADATA_JOB_BM>
+
+	column send_id
+		dataType: string
+		lineageTag: <UUID-col-send_id>
+		summarizeBy: none
+		sourceColumn: send_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_unit
+		dataType: string
+		lineageTag: <UUID-col-business_unit>
+		summarizeBy: none
+		sourceColumn: business_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_name
+		dataType: string
+		lineageTag: <UUID-col-email_name>
+		summarizeBy: none
+		sourceColumn: email_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column comp_key
+		dataType: string
+		lineageTag: <UUID-col-comp_key>
+		summarizeBy: none
+		sourceColumn: comp_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column car_model
+		dataType: string
+		lineageTag: <UUID-col-car_model>
+		summarizeBy: none
+		sourceColumn: car_model
+
+		annotation SummarizationSetBy = Automatic
+
+	column catalyst_type
+		dataType: string
+		lineageTag: <UUID-col-catalyst_type>
+		summarizeBy: none
+		sourceColumn: catalyst_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column send_date
+		dataType: string
+		lineageTag: <UUID-col-send_date>
+		summarizeBy: none
+		sourceColumn: send_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column program_names
+		dataType: string
+		lineageTag: <UUID-col-program_names>
+		summarizeBy: none
+		sourceColumn: program_names
+
+		annotation SummarizationSetBy = Automatic
+
+	column program_or_campaign
+		dataType: string
+		lineageTag: <UUID-col-program_or_campaign>
+		summarizeBy: none
+		sourceColumn: program_or_campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column communication_category
+		dataType: string
+		lineageTag: <UUID-col-communication_category>
+		summarizeBy: none
+		sourceColumn: communication_category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition V_DIM_SFMC_METADATA_JOB_BM = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("vcg_dm.west-europe.azure.snowflakecomputing.com"
+				    ,param_warehouse_analyst
+				    ,[Role=param_role_analyst]
+				    ),
+				    DEV_EDW_DB_Database = Source{[Name=param_database_prod,Kind="Database"]}[Data],
+				    MARCOM_APP_DIRECTMARKETING_Schema = DEV_EDW_DB_Database{[Name=param_schema_dm,Kind="Schema"]}[Data],
+				    V_DIM_METADATA_JOB_View = MARCOM_APP_DIRECTMARKETING_Schema{[Name="V_DIM_SFMC_METADATA_JOB",Kind="View"]}[Data],
+				    #"Demoted Headers" = Table.DemoteHeaders(V_DIM_METADATA_JOB_View),
+				    #"Transposed Table" = Table.Transpose(#"Demoted Headers"),
+				    #"Lowercased Text" = Table.TransformColumns(#"Transposed Table",{{"Column1", Text.Lower, type text}}),
+				    #"Transposed Table1" = Table.Transpose(#"Lowercased Text"),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Transposed Table1", [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"program_or_compaign", "program_or_campaign"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Custom", each if [email_name_mapping] <> null then "Exact Match"
+				else if [journey_via_regex] <> null then "Regex Match" else null),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"Custom", "ExactVsFlexibleRegex"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"ExactVsFlexibleRegex"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","NeutralPreference","Neutral Preference",Replacer.ReplaceText,{"program_names"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

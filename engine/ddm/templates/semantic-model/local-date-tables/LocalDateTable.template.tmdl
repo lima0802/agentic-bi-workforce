@@ -1,0 +1,103 @@
+table LocalDateTable_<LDT-GUID>
+	isHidden
+	showAsVariationsOnly
+	lineageTag: <UUID-table>
+
+	column Date
+		isHidden
+		lineageTag: <UUID-col-Date>
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: <UUID-col-Year>
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: <UUID-col-MonthNo>
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: <UUID-col-Month>
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: <UUID-col-QuarterNo>
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: <UUID-col-Quarter>
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: <UUID-col-Day>
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: <UUID-hierarchy>
+
+		level Year
+			lineageTag: <UUID-level-Year>
+			column: Year
+
+		level Quarter
+			lineageTag: <UUID-level-Quarter>
+			column: Quarter
+
+		level Month
+			lineageTag: <UUID-level-Month>
+			column: Month
+
+		level Day
+			lineageTag: <UUID-level-Day>
+			column: Day
+
+		annotation TemplateId = DateHierarchy
+
+	partition LocalDateTable_<LDT-GUID> = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('<SOURCE_TABLE>'[<SOURCE_COLUMN>])), 1, 1), Date(Year(MAX('<SOURCE_TABLE>'[<SOURCE_COLUMN>])), 12, 31))
+
+	annotation __PBI_LocalDateTable = true

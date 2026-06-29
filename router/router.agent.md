@@ -30,11 +30,11 @@ date/comparison behavior, selected skills + execution order, validation checklis
 explicit approval line. Do not build until the user approves.
 
 ## Step 3 — Dispatch
-| client | task | skill (engine) |
+| client | task | engine |
 |---|---|---|
-| volvo | ddm-start | `../skills/digital-direct-marketing-dashboard-start` |
+| volvo | ddm-start | `../engine/ddm` (SKILL.md + AGENTS.md) |
 
-The DDM skill delegates only through the WPP wrappers — `wpp-plan` → `wpp-model` →
+The engine delegates only through the WPP wrappers — `wpp-plan` → `wpp-model` →
 `wpp-report` (in `../skills/`). WPP wrappers call the **pinned** Fabric foundation skills;
 never call Fabric directly. Pass the client pack to the engine as overrides.
 
